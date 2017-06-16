@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>QuickTemplate Example</title>
+    <script src="../quick-template.js"></script>
+    <script>
+        function runExample() {
+            var tmpl = new QuickTemplate();
+            var template = document.getElementById('template').innerHTML;
+            var buffer = '';
+
+            tmpl.setTemplate(template);
+
+            for (var i = 0; i < 10; i++) {
+                for (var j = 0; j < 10; j++) {
+                    buffer += tmpl.getView({
+                        number: (i + 1) * (j + 1),
+                        left: i * 60,
+                        top: j * 60,
+                        opacity: Math.random()
+                    });
+                }
+            }
+
+            document.getElementById('container').innerHTML = buffer;
+        }
+    </script>
+    <style>
+        #container {
+            position: relative;
+        }
+
+        .tile {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            color: white;
+            background-color: black;
+            text-align: center;
+            line-height: 50px;
+        }
+    </style>
+</head>
+
+<body onload="runExample()">
+    <div id="template" style="display: none">
+        <div class="tile" data-tmpl-style="left:[[left]]; top:[[top]]; opacity:[[opacity]]">[[number]]</div>
+    </div>
+    <div id="container"></div>
+</body>
+
+</html>

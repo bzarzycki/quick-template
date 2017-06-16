@@ -1,0 +1,32 @@
+<html>
+
+<head>
+    <title>QuickTemplate Basic Example</title>
+    <script src="../quick-template.js"></script>
+    <script>
+        function runExample() {
+            var tmpl = new QuickTemplate();
+            var template = document.getElementById('template').innerHTML;
+
+            tmpl.setTemplate(template);
+
+            var output = tmpl.getView({
+                title: 'Hello World!',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+            });
+
+            document.getElementById('container').innerHTML = output;
+        }
+    </script>
+</head>
+
+<body onload="runExample()">
+    <div id="template" style="display: none">
+        <h1>[[title]]</h1>
+        <p>[[text]]</p>
+    </div>
+    
+    <div id="container"></div>
+</body>
+
+</html>
