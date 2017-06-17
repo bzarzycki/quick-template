@@ -5,17 +5,20 @@
     <script src="../quick-template.js"></script>
     <script>
         function runExample() {
-            var tmpl = new QuickTemplate();
+            var quickTemplate = new QuickTemplate();
             var template = document.getElementById('template').innerHTML;
+            var loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 
-            tmpl.setTemplate(template);
-
-            var output = tmpl.getView({
+            var model = {
                 title: 'Hello World!',
-                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
-            });
+                text: loremIpsum,
+                randomText: quickTemplate.randomStr(loremIpsum, 20),
+                postCode: quickTemplate.randomByMask('__-___')
+            }
 
-            document.getElementById('container').innerHTML = output;
+            var fragment = quickTemplate.process(template, model);
+
+            document.getElementById('container').innerHTML = fragment;
         }
     </script>
 </head>
@@ -24,8 +27,12 @@
     <div id="template" style="display: none">
         <h1>[[title]]</h1>
         <p>[[text]]</p>
+        <h2>Random substring from buffer</h2>
+        <strong>[[randomText]]</strong>
+        <h2>Post code example</h2>
+        <p>Random: [[postCode]]</p>
     </div>
-    
+
     <div id="container"></div>
 </body>
 

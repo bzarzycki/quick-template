@@ -5,20 +5,23 @@
     <script src="../quick-template.js"></script>
     <script>
         function runExample() {
-            var tmpl = new QuickTemplate();
+            var quickTemplate = new QuickTemplate();
             var template = document.getElementById('template').innerHTML;
             var buffer = '';
 
-            tmpl.setTemplate(template);
-
             for (var i = 0; i < 10; i++) {
                 for (var j = 0; j < 10; j++) {
-                    buffer += tmpl.getView({
+
+                    var model = {
                         number: (i + 1) * (j + 1),
                         left: i * 60,
                         top: j * 60,
-                        opacity: Math.random()
-                    });
+                        red: quickTemplate.randomInt(0, 150),
+                        green: quickTemplate.randomInt(0, 150),
+                        blue: quickTemplate.randomInt(0, 150)
+                    }
+
+                    buffer += quickTemplate.process(template, model);
                 }
             }
 
@@ -29,7 +32,6 @@
         #container {
             position: relative;
         }
-
         .tile {
             position: absolute;
             width: 50px;
@@ -44,7 +46,7 @@
 
 <body onload="runExample()">
     <div id="template" style="display: none">
-        <div class="tile" data-tmpl-style="left:[[left]]; top:[[top]]; opacity:[[opacity]]">[[number]]</div>
+        <div class="tile" data-tmpl-style="left:[[left]]; top:[[top]]; background-color: rgb([[red]], [[green]], [[blue]])">[[number]]</div>
     </div>
     <div id="container"></div>
 </body>
