@@ -1,5 +1,11 @@
 /**
+ * QuickTemplate
+ * Tool for templates.
+ * https://github.com/bzarzycki/quick-template
+ * 
  * @author Blazej Zarzycki
+ * @version 1.0.1
+ * @license MIT
  */
 function QuickTemplate() {
 
@@ -7,8 +13,15 @@ function QuickTemplate() {
         left: '[[',
         right: ']]'
     }
-    
+
     var attributePrefix = 'data-tmpl-';
+
+    var replaceStr = function (text, oldValue, newValue) {
+        while (text.indexOf(oldValue) > -1) {
+            text = text.replace(oldValue, newValue);
+        }
+        return text;
+    }
 
     this.setPlaceholderSymbol = function (left, right) {
         placeholder.left = open;
@@ -22,10 +35,10 @@ function QuickTemplate() {
     this.process = function (template, model) {
         var output = template;
         for (var key in model) {
-            var str = placeholder.left + key + placeholder.right;
-            output = output.replace(str, model[key]);
+            var field = placeholder.left + key + placeholder.right;
+            output = replaceStr(output, field, model[key]);
         }
-        output = output.replace(attributePrefix, '');
+        output = replaceStr(output, attributePrefix, '');
         return output;
     }
 
